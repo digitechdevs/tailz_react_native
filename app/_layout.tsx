@@ -1,11 +1,16 @@
+import { QueryClientProvider } from '@tanstack/react-query';
 import { Stack } from 'expo-router';
+import { queryClient } from '../src/core/query/query-client';
 
 export default function Layout() {
   return (
-    <Stack>
-      <Stack.Screen name="index" options={{ title: 'Home' }} />
-      <Stack.Screen name="user" options={{ title: 'User Profile' }} />
-      <Stack.Screen name="team" options={{ title: 'Team Members' }} />
-    </Stack>
+    <QueryClientProvider client={queryClient}>
+      <Stack>
+        <Stack.Screen name="index" options={{ title: 'Home' }} />
+        <Stack.Screen name="user" options={{ title: 'User Profile' }} />
+        <Stack.Screen name="team" options={{ title: 'Team Members' }} />
+        <Stack.Screen name="modal" options={{ title: 'Modal' }} />
+      </Stack>
+    </QueryClientProvider>
   );
 }

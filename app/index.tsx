@@ -16,6 +16,11 @@ export default function HomeScreen() {
                         <Text style={styles.buttonText}>Go to Team Screen</Text>
                     </Pressable>
                 </Link>
+                <Link href="/modal" asChild>
+                    <Pressable style={styles.button}>
+                        <Text style={styles.buttonText}>Go to Modal Screen</Text>
+                    </Pressable>
+                </Link>
             </View>
         </View>
     );
@@ -23,10 +28,12 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        // flex: 1,
+        // justifyContent: 'center',
+        // alignItems: 'center',
         backgroundColor: '#fff',
+        marginTop: 20,
+        padding: 10,
     },
     title: {
         fontSize: 24,
@@ -37,7 +44,7 @@ const styles = StyleSheet.create({
         gap: 15,
     },
     button: {
-        backgroundColor: '#007AFF',
+        backgroundColor: '#225cfaff',
         padding: 15,
         borderRadius: 8,
         alignItems: 'center',
