@@ -1,57 +1,41 @@
-import { Link } from 'expo-router';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Redirect } from "expo-router";
+import { useEffect, useState } from "react";
+import { ActivityIndicator, View } from "react-native";
 
-export default function HomeScreen() {
+export default function Index() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
+  const checkAuth = async () => {
+    try {
+      const token = await AsyncStorage.getItem("userToken");
+      if (token) {
+        setIsAuthenticated(true);
+      }
+    } catch (error) {
+      console.error("Failed to check auth status", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (isLoading) {
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Welcome to React Native 2</Text>
-            <View style={styles.buttonContainer}>
-                <Link href="/user" asChild>
-                    <Pressable style={styles.button}>
-                        <Text style={styles.buttonText}>Go to User Screen</Text>
-                    </Pressable>
-                </Link>
-                <Link href="/team" asChild>
-                    <Pressable style={styles.button}>
-                        <Text style={styles.buttonText}>Go to Team Screen</Text>
-                    </Pressable>
-                </Link>
-                <Link href="/modal" asChild>
-                    <Pressable style={styles.button}>
-                        <Text style={styles.buttonText}>Go to Modal Screen</Text>
-                    </Pressable>
-                </Link>
-            </View>
-        </View>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" />
+      </View>
     );
-}
+  }
 
-const styles = StyleSheet.create({
-    container: {
-        // flex: 1,
-        // justifyContent: 'center',
-        // alignItems: 'center',
-        backgroundColor: '#fff',
-        marginTop: 20,
-        padding: 10,
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 20,
-    },
-    buttonContainer: {
-        gap: 15,
-    },
-    button: {
-        backgroundColor: '#225cfaff',
-        padding: 15,
-        borderRadius: 8,
-        alignItems: 'center',
-    },
-    buttonText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: '600',
-    },
-});
+  if (!isAuthenticated) {
+    return <Redirect href="/login" />;
+  }
+
+  // In a real app this would go to your dashboard/tabs
+  return <Redirect href="/(tabs)" />;
+}
