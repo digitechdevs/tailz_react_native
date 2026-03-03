@@ -61,7 +61,7 @@ export default function LoginScreen() {
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
-        <Image src="/public/logo.png" style={styles.logo} />
+        <Image style={styles.logo} source={require("../public/logo.png")} />
 
         <View style={styles.formContainer}>
           <View style={styles.header}>
